@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane fx:id="window" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainapp.Controller">
    <top>
-      <MenuBar prefHeight="25.0" prefWidth="762.0" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="25.0" prefWidth="762.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
          <menus>
             <Menu fx:id="menufile" mnemonicParsing="false" text="File">
                <items>
@@ -36,6 +38,13 @@
       </MenuBar>
    </top>
    <center>
-      <TextArea fx:id="textarea" BorderPane.alignment="CENTER" />
+      <TextArea fx:id="textarea" style="-fx-border-color: gray; -fx-focus-color: transparent;" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <ToolBar fx:id="toolbar" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label fx:id="time" prefHeight="4.0" prefWidth="28.0" text="Time" />
+         </items>
+      </ToolBar>
+   </bottom>
 </BorderPane>
