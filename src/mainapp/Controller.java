@@ -1,41 +1,61 @@
 package mainapp;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
 public class Controller {
 
+    public Controller(){}
 
-    AnchorPane mainwind;
+    @FXML AnchorPane mainwind;@FXML TextArea textarea;@FXML ScrollBar scrollright;@FXML ScrollBar scrolldown;
+    @FXML Menu menufile;@FXML MenuItem menufile_open;@FXML MenuItem menufile_save;@FXML MenuItem menufile_saveas;
+    @FXML MenuItem menufile_exit;@FXML Menu menuedit;@FXML MenuItem menuedit_find;@FXML Menu menuprint;
+    @FXML Menu menuhelp;@FXML MenuItem menuhelp_about;@FXML MenuItem menuhelp_settings;
 
-    TextArea textarea;
+    @FXML
+    private void initialize(){
+        System.out.println("QY: FXML loaded");
+    }
 
-    ScrollBar scrollright;
-    ScrollBar scrolldown;
+    @FXML
+    private void open(){
 
-    Menu menufile;
-    MenuItem menufile_open;
-    MenuItem menufile_save;
-    MenuItem menufile_saveas;
-    MenuItem menufile_exit;
+    }
+    @FXML
+    private void save(){
 
-    Menu menuedit;
-    MenuItem menuedit_find;
+    }
+    @FXML
+    private void saveAs(){
 
-    Menu menuprint;
+    }
+    @FXML
+    private void exit(){
 
-    Menu menuhelp;
-    MenuItem menuhelp_about;
-    MenuItem menuhelp_settings;
+    }
+    @FXML
+    private void find(){
 
+    }
+    @FXML
+    private void print(){
 
+    }
+    @FXML
+    private void about(){
 
+    }
+    @FXML
+    private void settings(){
 
+    }
 
 }

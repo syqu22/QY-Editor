@@ -9,17 +9,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private long timeStart;
-    private long timeEnd;
-    private long timeElapsed;
-
+    private long timeStart,timeEnd,timeElapsed;
+    private Controller controller = new Controller();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         timeStart = System.currentTimeMillis();
         System.out.println("QY: Application started");
         Parent root = FXMLLoader.load(getClass().getResource("../res/mainwindow.fxml")); //startwindow.fxml
-        System.out.println("QY: FXML loaded");
         primaryStage.setTitle("QY - Text Editor");
         primaryStage.setMinHeight(120);
         primaryStage.setMinWidth(300);
