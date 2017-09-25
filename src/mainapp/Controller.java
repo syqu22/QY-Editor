@@ -1,21 +1,15 @@
 package mainapp;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 
 
 public class Controller {
 
     public Controller(){}
 
-    @FXML AnchorPane mainwind;@FXML TextArea textarea;@FXML ScrollBar scrollright;@FXML ScrollBar scrolldown;
+    @FXML BorderPane window;@FXML TextArea textarea;
     @FXML Menu menufile;@FXML MenuItem menufile_open;@FXML MenuItem menufile_save;@FXML MenuItem menufile_saveas;
     @FXML MenuItem menufile_exit;@FXML Menu menuedit;@FXML MenuItem menuedit_find;@FXML Menu menuprint;
     @FXML Menu menuhelp;@FXML MenuItem menuhelp_about;@FXML MenuItem menuhelp_settings;
@@ -51,7 +45,12 @@ public class Controller {
     }
     @FXML
     private void about(){
-
+        Main main = new Main();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("About");
+        alert.setContentText("QY is a text editor wrote in Java.\nVersion: " + main.VERSION );
+        alert.show();
     }
     @FXML
     private void settings(){
