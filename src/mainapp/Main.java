@@ -13,7 +13,9 @@ public class Main extends Application {
     public final String VERSION = "v0.1";
 
     private long timeStart,timeEnd,timeElapsed;
-   // private Controller controller = new Controller();
+    //private Controller controller = new Controller();
+
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{

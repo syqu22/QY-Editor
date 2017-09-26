@@ -11,7 +11,7 @@
 
 <BorderPane fx:id="window" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainapp.Controller">
    <top>
-      <MenuBar prefHeight="25.0" prefWidth="762.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="25.0" prefWidth="762.0" BorderPane.alignment="CENTER">
          <menus>
             <Menu fx:id="menufile" mnemonicParsing="false" text="File">
                <items>
@@ -43,7 +43,7 @@
    <bottom>
       <ToolBar fx:id="toolbar" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <items>
-            <Label fx:id="time" prefHeight="4.0" prefWidth="28.0" text="Time" />
+            <Label fx:id="timelb" prefHeight="6.0" prefWidth="570.0" text="Time" />
          </items>
       </ToolBar>
    </bottom>
