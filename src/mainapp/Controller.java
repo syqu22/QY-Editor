@@ -1,25 +1,41 @@
 package mainapp;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.animation.*;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
 public class Controller{
 
+    public BorderPane window;
+    public Menu menufile;
+    public MenuItem menufile_open;
+    public MenuItem menufile_save;
+    public MenuItem menufile_exit;
+    public MenuItem menufile_saveas;
+    public Menu menuedit;
+    public MenuItem menuedit_find;
+    public Menu menuprint;
+    public MenuItem menuhelp_about;
+    public Menu menuhelp;
+    public MenuItem menuhelp_settings;
+    public ToolBar toolbar;
+
     public Controller(){}
 
-    private @FXML BorderPane window;private @FXML TextArea textarea; private @FXML ToolBar toolbar;private @FXML Label timelb;
-    private @FXML Menu menufile;private @FXML MenuItem menufile_open;private @FXML MenuItem menufile_save;private @FXML MenuItem menufile_saveas;
-    private @FXML MenuItem menufile_exit;private @FXML Menu menuedit;private @FXML MenuItem menuedit_find;private @FXML Menu menuprint;
-    private @FXML Menu menuhelp;private @FXML MenuItem menuhelp_about;private @FXML MenuItem menuhelp_settings;
+    private @FXML TextArea textarea;
+    private @FXML Label timely;
+
+    private String fileOpened;
 
     @FXML
     private void initialize(){
@@ -30,13 +46,10 @@ public class Controller{
     private void bindToTime() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0),
-
-                        new EventHandler<ActionEvent>(){
-                            @Override public void handle(ActionEvent actionEvent) {
-                                Calendar time = Calendar.getInstance();
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-                                timelb.setText(simpleDateFormat.format(time.getTime()));
-                            }
+                        actionEvent -> {
+                            Calendar time = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                            timely.setText(simpleDateFormat.format(time.getTime()));
                         }
                 ),
                 new KeyFrame(Duration.seconds(1))
@@ -45,21 +58,55 @@ public class Controller{
         timeline.play();
     }
 
+    private void load(){
+        String line;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileOpened));
+            try {
+                while ((line = in.readLine()) != null) {
+                    textarea.appendText(line + "\n");
+                }
+                in.close();
+            }catch (IOException e){
+                errorAlert(e);
+            }
+        }catch (FileNotFoundException e){
+           errorAlert(e);
+        }
+
+
+    }
+
     @FXML
     private void open(){
-        //TODO Open file function
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("QY - Text Editor");
+        File fileSelected = fileChooser.showOpenDialog(null);
+        fileOpened = fileSelected.toString();
+        textarea.clear();
+        load();
     }
     @FXML
     private void save(){
-        //TODO Save file function
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("QY - Text Editor");
+        File fileSelected =  fileChooser.showSaveDialog(null);
+        fileOpened = fileSelected.toString();
+
+
     }
     @FXML
     private void saveAs(){
-        //TODO SaveAs file function
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("QY - Text Editor");
+        File fileSelected =  fileChooser.showSaveDialog(null);
+        fileOpened = fileSelected.toString();
+
     }
     @FXML
     private void exit(){
-        //TODO Exit function
+        System.exit(0);
+        //exitAlert();
     }
     @FXML
     private void find(){
@@ -75,12 +122,28 @@ public class Controller{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("About");
-        alert.setContentText("QY is a text editor wrote in Java.\nVersion: " + main.VERSION );
+        alert.setContentText("QY is a text editor written in Java.\nMade By Syqu22\nVersion: " + main.VERSION );
         alert.show();
     }
     @FXML
     private void settings(){
         //TODO Settings window
     }
+
+    private void errorAlert(Exception e){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle("QY - Editor");
+        alert.setContentText(e.toString());
+        alert.show();
+    }
+
+   /* private void exitAlert(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null); TODO
+        alert.setTitle("QY - Editor");
+        alert.setContentText("Save before exiting?");
+        alert.show();
+    }*/
 
 }

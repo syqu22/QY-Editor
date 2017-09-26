@@ -10,16 +10,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public final String VERSION = "v0.1";
-
-    private long timeStart,timeEnd,timeElapsed;
-    //private Controller controller = new Controller();
-
-
+    final String VERSION = "v0.1";
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        timeStart = System.currentTimeMillis();
+    public void start(Stage primaryStage) throws Exception {
+        long timeStart = System.currentTimeMillis();
         System.out.println("QY: " + VERSION + " application started");
         Parent root = FXMLLoader.load(getClass().getResource("../res/mainwindow.fxml")); //startwindow.fxml
         primaryStage.setTitle("QY - Text Editor");
@@ -28,13 +23,13 @@ public class Main extends Application {
         primaryStage.show();
 
         System.out.println("QY: Scene showed");
-        timeEnd = System.currentTimeMillis();
-        timeElapsed = timeEnd - timeStart;
+        long timeEnd = System.currentTimeMillis();
+        long timeElapsed = timeEnd - timeStart;
         System.out.println();
         System.out.println("QY: Everything loaded in " + timeElapsed + "ms");
 
-    }
 
+    }
 
     public static void main(String[] args) {
         launch(args);
