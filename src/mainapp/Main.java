@@ -18,7 +18,7 @@ public class Main extends Application {
         System.out.println("QY: " + VERSION + " application started");
 
         //FXMLoader
-        Parent root = FXMLLoader.load(getClass().getResource("../res/mainwindow.fxml")); //startwindow.fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/mainwindow.fxml"));
 
         //Settings
         primaryStage.setTitle("QY - Text Editor");

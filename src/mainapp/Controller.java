@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,12 +36,12 @@ public class Controller{
     private @FXML Label timely;
 
     //ExtensionFilters
-    private FileChooser.ExtensionFilter fileExtensionFilter1 = new FileChooser.ExtensionFilter("Text File (.txt)", "*.txt");
-    private FileChooser.ExtensionFilter fileExtensionFilter2 = new FileChooser.ExtensionFilter("Configuration File (.ini)", "*.ini");
-    private FileChooser.ExtensionFilter fileExtensionFilter3 = new FileChooser.ExtensionFilter("All files (.*)","*.*");
+    private final FileChooser.ExtensionFilter fileExtensionFilter1 = new FileChooser.ExtensionFilter("Text File (.txt)", "*.txt");
+    private final FileChooser.ExtensionFilter fileExtensionFilter2 = new FileChooser.ExtensionFilter("Configuration File (.ini)", "*.ini");
+    private final FileChooser.ExtensionFilter fileExtensionFilter3 = new FileChooser.ExtensionFilter("All files (.*)","*.*");
 
-    private FileChooser fileChooser = new FileChooser();
-    private FileLocation fileLocation = new FileLocation();
+    private final FileChooser fileChooser = new FileChooser();
+    private final FileLocation fileLocation = new FileLocation();
 
 
     @FXML
