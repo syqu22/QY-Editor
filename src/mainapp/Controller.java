@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,15 +34,24 @@ public class Controller{
     private @FXML TextArea textarea;
     private @FXML Label timely;
 
-    private String fileOpened;
+    //ExtensionFilters
+    private FileChooser.ExtensionFilter fileExtensionFilter1 = new FileChooser.ExtensionFilter("Text File (.txt)", "*.txt");
+    private FileChooser.ExtensionFilter fileExtensionFilter2 = new FileChooser.ExtensionFilter("Configuration File (.ini)", "*.ini");
+    private FileChooser.ExtensionFilter fileExtensionFilter3 = new FileChooser.ExtensionFilter("All files (.*)","*.*");
+
+    private FileChooser fileChooser = new FileChooser();
+    private FileLocation fileLocation = new FileLocation();
+
 
     @FXML
     private void initialize(){
         System.out.println("QY: FXML loaded");
-        bindToTime();
+        setFileChooserSettings();
+        timeUpdate();
     }
 
-    private void bindToTime() {
+    //Time in Hours:Seconds
+    private void timeUpdate() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         actionEvent -> {
@@ -58,10 +66,11 @@ public class Controller{
         timeline.play();
     }
 
+    //Load file path from selectedFile then read file with lines
     private void load(){
         String line;
         try {
-            BufferedReader in = new BufferedReader(new FileReader(fileOpened));
+            BufferedReader in = new BufferedReader(new FileReader(fileLocation.getFileLocation()));
             try {
                 while ((line = in.readLine()) != null) {
                     textarea.appendText(line + "\n");
@@ -78,35 +87,45 @@ public class Controller{
     }
 
     @FXML
+    //Open File method
     private void open(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("QY - Text Editor");
         File fileSelected = fileChooser.showOpenDialog(null);
-        fileOpened = fileSelected.toString();
-        textarea.clear();
-        load();
+        if(fileSelected != null){
+            fileLocation.setFileLocation(fileSelected.toString());
+            textarea.clear();
+            load();
+        }else{
+           System.err.println("Open File canceled");
+        }
+
     }
     @FXML
+    //Save File method
     private void save(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("QY - Text Editor");
         File fileSelected =  fileChooser.showSaveDialog(null);
-        fileOpened = fileSelected.toString();
+        if(fileSelected != null) {
+            fileLocation.setFileLocation(fileSelected.toString());
+        }else{
+            System.err.println("Save File canceled");
+        }
 
 
     }
     @FXML
+    //Save as File method
     private void saveAs(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("QY - Text Editor");
         File fileSelected =  fileChooser.showSaveDialog(null);
-        fileOpened = fileSelected.toString();
+        if(fileSelected != null) {
+            fileLocation.setFileLocation(fileSelected.toString());
+        }else{
+            System.err.println("Save as File canceled");
+        }
 
     }
     @FXML
+    //Exit app method
     private void exit(){
         System.exit(0);
-        //exitAlert();
     }
     @FXML
     private void find(){
@@ -117,6 +136,7 @@ public class Controller{
         //TODO Print function
     }
     @FXML
+    //About app method
     private void about(){
         Main main = new Main();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -126,24 +146,26 @@ public class Controller{
         alert.show();
     }
     @FXML
+    //Settings window method
     private void settings(){
         //TODO Settings window
     }
 
+    //Error alert method
     private void errorAlert(Exception e){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
-        alert.setTitle("QY - Editor");
+        alert.setTitle("QY - Text Editor");
         alert.setContentText(e.toString());
         alert.show();
     }
 
-   /* private void exitAlert(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null); TODO
-        alert.setTitle("QY - Editor");
-        alert.setContentText("Save before exiting?");
-        alert.show();
-    }*/
+    //Set settings of FileChooser
+    private void setFileChooserSettings(){
+        fileChooser.getExtensionFilters().add(fileExtensionFilter1);
+        fileChooser.getExtensionFilters().add(fileExtensionFilter2);
+        fileChooser.getExtensionFilters().add(fileExtensionFilter3);
+        fileChooser.setTitle("QY - Editor");
+    }
 
 }
