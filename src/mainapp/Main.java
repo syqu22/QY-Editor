@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    final String VERSION = "v0.2"; //Version of application
+    final String VERSION = "v0.3"; //Version of application
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start Method
         long timeStart = System.currentTimeMillis();
-        System.out.println("QY: " + VERSION + " application started");
+        System.out.println("QY: " + VERSION);
 
         //FXMLoader
         Parent root = FXMLLoader.load(getClass().getResource("/mainwindow.fxml"));

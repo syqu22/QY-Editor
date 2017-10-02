@@ -3,14 +3,14 @@ package mainapp;
 class FileLocation {
     private String location;
 
-    FileLocation(){
+    FileLocation() {
     }
 
-    String getFileLocation(){
+    String getFileLocation() {
         return location;
     }
 
-    void setFileLocation(String location){
-         this.location = location;
+    void setFileLocation(String location) {
+        this.location = location;
     }
 }

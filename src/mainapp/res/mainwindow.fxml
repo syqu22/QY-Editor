@@ -8,7 +8,7 @@
       <MenuBar prefHeight="25.0" prefWidth="762.0" BorderPane.alignment="CENTER">
          <Menu fx:id="menufile" mnemonicParsing="false" text="File">
             <MenuItem fx:id="menufile_open" mnemonicParsing="false" onAction="#open" text="Open..." />
-            <MenuItem fx:id="menufile_save" mnemonicParsing="false" onAction="#save" text="Save..." />
+            <MenuItem fx:id="menufile_save" mnemonicParsing="false" onAction="#save" text="Save" />
             <MenuItem fx:id="menufile_saveas" mnemonicParsing="false" onAction="#saveAs" text="Save as..." />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="menufile_exit" mnemonicParsing="false" onAction="#exit" text="Exit" />
@@ -17,9 +17,13 @@
             <MenuItem fx:id="menuedit_find" mnemonicParsing="false" onAction="#find" text="Find..." />
          </Menu>
          <Menu fx:id="menuprint" mnemonicParsing="false" onAction="#print" text="Print..." />
+         <Menu fx:id="menusettings" mnemonicParsing="false" text="Settings">
+           <items>
+               <CheckMenuItem fx:id="menusettings_toolbar" mnemonicParsing="false" onAction="#toolbar_show" selected="true" text="Show Toolbar" />
+           </items>
+         </Menu>
          <Menu fx:id="menuhelp" mnemonicParsing="false" text="Help">
             <MenuItem fx:id="menuhelp_about" mnemonicParsing="false" onAction="#about" text="About" />
-            <MenuItem fx:id="menuhelp_settings" mnemonicParsing="false" onAction="#settings" text="Settings" />
          </Menu>
       </MenuBar>
    </top>
@@ -31,7 +35,8 @@
    </center>
    <bottom>
       <ToolBar fx:id="toolbar" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <Label fx:id="timely" prefHeight="6.0" prefWidth="570.0" text="Time" />
+         <Label fx:id="timely" prefHeight="17.0" prefWidth="453.0" text="Time" />
+         <Label fx:id="filely" />
       </ToolBar>
    </bottom>
 </BorderPane>

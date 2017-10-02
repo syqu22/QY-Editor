@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -16,24 +15,14 @@ import java.util.Calendar;
 
 public class Controller{
 
-    public BorderPane window;
-    public Menu menufile;
-    public MenuItem menufile_open;
-    public MenuItem menufile_save;
-    public MenuItem menufile_exit;
-    public MenuItem menufile_saveas;
-    public Menu menuedit;
-    public MenuItem menuedit_find;
-    public Menu menuprint;
-    public MenuItem menuhelp_about;
-    public Menu menuhelp;
-    public MenuItem menuhelp_settings;
-    public ToolBar toolbar;
 
     public Controller(){}
 
+    private @FXML ToolBar toolbar;
+    private @FXML CheckMenuItem menusettings_toolbar;
     private @FXML TextArea textarea;
     private @FXML Label timely;
+    private @FXML Label filely;
 
     //ExtensionFilters
     private final FileChooser.ExtensionFilter fileExtensionFilter1 = new FileChooser.ExtensionFilter("Text File (.txt)", "*.txt");
@@ -42,6 +31,7 @@ public class Controller{
 
     private final FileChooser fileChooser = new FileChooser();
     private final FileLocation fileLocation = new FileLocation();
+    private final FileName fileName = new FileName();
 
 
     @FXML
@@ -49,6 +39,7 @@ public class Controller{
         System.out.println("QY: FXML loaded");
         setFileChooserSettings();
         timeUpdate();
+
     }
 
     //Time in Hours:Seconds
@@ -67,8 +58,8 @@ public class Controller{
         timeline.play();
     }
 
-    //Load file path from selectedFile then read file with lines
-    private void load(){
+    //Load file path from fileLocation then read file with lines
+    private void loadFile(){
         String line;
         try {
             BufferedReader in = new BufferedReader(new FileReader(fileLocation.getFileLocation()));
@@ -83,8 +74,15 @@ public class Controller{
         }catch (FileNotFoundException e){
            errorAlert(e);
         }
+    }
 
-
+    //Save file in selected file path from fileLocation
+    private void saveFile(){
+        try(PrintWriter save = new PrintWriter(fileLocation.getFileLocation())){
+            save.println(textarea.getText());
+        }catch (FileNotFoundException e){
+            errorAlert(e);
+        }
     }
 
     @FXML
@@ -93,8 +91,10 @@ public class Controller{
         File fileSelected = fileChooser.showOpenDialog(null);
         if(fileSelected != null){
             fileLocation.setFileLocation(fileSelected.toString());
+            fileName.setFileName(fileSelected.getName());
+            filely.setText(fileName.getFileName());
             textarea.clear();
-            load();
+            loadFile();
         }else{
            System.err.println("Open File canceled");
         }
@@ -103,11 +103,19 @@ public class Controller{
     @FXML
     //Save File method
     private void save(){
-        File fileSelected =  fileChooser.showSaveDialog(null);
-        if(fileSelected != null) {
-            fileLocation.setFileLocation(fileSelected.toString());
+        if(fileLocation.getFileLocation() == null) {
+            File fileSelected = fileChooser.showSaveDialog(null);
+            if (fileSelected != null) {
+                fileLocation.setFileLocation(fileSelected.toString());
+                fileName.setFileName(fileSelected.getName());
+                filely.setText(fileName.getFileName());
+                saveFile();
+            } else {
+                System.err.println("Save File canceled");
+            }
         }else{
-            System.err.println("Save File canceled");
+            filely.setText(fileName.getFileName());
+            saveFile();
         }
 
 
@@ -128,14 +136,33 @@ public class Controller{
     private void exit(){
         System.exit(0);
     }
+
+    //Find word in text method
     @FXML
     private void find(){
         //TODO Find function
     }
+
+    //Show toolbar menu checkbox
+    @FXML
+    private void toolbar_show(){
+       if(menusettings_toolbar.isSelected()){
+           toolbar.setManaged(true);
+           toolbar.setVisible(true);
+
+       }else{
+           toolbar.setManaged(false);
+           toolbar.setVisible(false);
+       }
+
+    }
+
+    //Print in printer
     @FXML
     private void print(){
         //TODO Print function
     }
+
     @FXML
     //About app method
     private void about(){
@@ -145,11 +172,6 @@ public class Controller{
         alert.setTitle("About");
         alert.setContentText("QY is a text editor written in Java.\nMade By Syqu22\nVersion: " + main.VERSION );
         alert.show();
-    }
-    @FXML
-    //Settings window method
-    private void settings(){
-        //TODO Settings window
     }
 
     //Error alert method
@@ -161,7 +183,7 @@ public class Controller{
         alert.show();
     }
 
-    //Set settings of FileChooser
+    //Settings of FileChooser
     private void setFileChooserSettings(){
         fileChooser.getExtensionFilters().add(fileExtensionFilter1);
         fileChooser.getExtensionFilters().add(fileExtensionFilter2);
