@@ -3,6 +3,7 @@ package mainapp;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -11,6 +12,7 @@ import javafx.util.Duration;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Optional;
 
 
 public class Controller{
@@ -29,17 +31,17 @@ public class Controller{
     private final FileChooser.ExtensionFilter fileExtensionFilter2 = new FileChooser.ExtensionFilter("Configuration File (.ini)", "*.ini");
     private final FileChooser.ExtensionFilter fileExtensionFilter3 = new FileChooser.ExtensionFilter("All files (.*)","*.*");
 
-    private final FileChooser fileChooser = new FileChooser();
-    private final FileLocation fileLocation = new FileLocation();
-    private final FileName fileName = new FileName();
-
+    private FileChooser fileChooser = new FileChooser();
+    private FileLocation fileLocation = new FileLocation();
+    private FileName fileName = new FileName();
+    private Main main = new Main();
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         System.out.println("QY: FXML loaded");
+        System.out.println("QY: " + (int)main.WIDTH + "X " + (int)main.HEIGHT + "Y");
         setFileChooserSettings();
         timeUpdate();
-
     }
 
     //Time in Hours:Seconds
@@ -92,7 +94,7 @@ public class Controller{
         if(fileSelected != null){
             fileLocation.setFileLocation(fileSelected.toString());
             fileName.setFileName(fileSelected.getName());
-            filely.setText(fileName.getFileName());
+            filely.setText("File: " + fileName.getFileName());
             textarea.clear();
             loadFile();
         }else{
@@ -108,7 +110,7 @@ public class Controller{
             if (fileSelected != null) {
                 fileLocation.setFileLocation(fileSelected.toString());
                 fileName.setFileName(fileSelected.getName());
-                filely.setText(fileName.getFileName());
+                filely.setText("File: " + fileName.getFileName());
                 saveFile();
             } else {
                 System.err.println("Save File canceled");
@@ -125,16 +127,24 @@ public class Controller{
     private void saveAs(){
         File fileSelected =  fileChooser.showSaveDialog(null);
         if(fileSelected != null) {
-            fileLocation.setFileLocation(fileSelected.toString());
+                fileLocation.setFileLocation(fileSelected.toString());
+                fileName.setFileName(fileSelected.getName());
+                filely.setText("File: " + fileName.getFileName());
+                saveFile();
         }else{
             System.err.println("Save as File canceled");
         }
 
     }
-    @FXML
+
     //Exit app method
+    @FXML
     private void exit(){
-        System.exit(0);
+        if(fileLocation.getFileLocation() != null){
+            saveOnExit();
+        }else{
+            Platform.exit();
+        }
     }
 
     //Find word in text method
@@ -166,17 +176,17 @@ public class Controller{
     @FXML
     //About app method
     private void about(){
-        Main main = new Main();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
         alert.setTitle("About");
-        alert.setContentText("QY is a text editor written in Java.\nMade By Syqu22\nVersion: " + main.VERSION );
+        alert.setHeaderText("QY is a text editor written in Java");
+        alert.setContentText("Made By Syqu22\nVersion: " + main.VERSION );
         alert.show();
     }
 
+
     //Error alert method
     private void errorAlert(Exception e){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle("QY - Text Editor");
         alert.setContentText(e.toString());
@@ -189,6 +199,31 @@ public class Controller{
         fileChooser.getExtensionFilters().add(fileExtensionFilter2);
         fileChooser.getExtensionFilters().add(fileExtensionFilter3);
         fileChooser.setTitle("QY - Editor");
+    }
+
+    //Save on Exit method
+    private void saveOnExit(){
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.setTitle("QY - Text editor");
+        alert.setHeaderText(null);
+        alert.setContentText("Save file before exiting?");
+
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.orElse(null) == buttonTypeOne){
+            saveFile();
+            Platform.exit();
+        } else if (result.orElse(null) == buttonTypeTwo) {
+            Platform.exit();
+        } else {
+            System.err.println("Exit canceled");
+
+        }
     }
 
 }
