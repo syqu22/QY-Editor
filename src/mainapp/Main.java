@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    final String VERSION = "v0.3"; //Version of application
+    final String VERSION = "v1"; //Version of application
     final double WIDTH = 600;
     final double HEIGHT = 400;
 

@@ -38,10 +38,11 @@ public class Controller{
 
     @FXML
     private void initialize() {
-        System.out.println("QY: FXML loaded");
-        System.out.println("QY: " + (int)main.WIDTH + "X " + (int)main.HEIGHT + "Y");
-        setFileChooserSettings();
-        timeUpdate();
+            System.out.println("QY: FXML loaded");
+            System.out.println("QY: Width = " + (int) main.WIDTH + " Height = " + (int) main.HEIGHT);
+            setFileChooserSettings();
+            timeUpdate();
+            toolbar.setManaged(false);
     }
 
     //Time in Hours:Seconds
@@ -147,30 +148,22 @@ public class Controller{
         }
     }
 
-    //Find word in text method
-    @FXML
-    private void find(){
-        //TODO Find function
-    }
-
     //Show toolbar menu checkbox
     @FXML
     private void toolbar_show(){
        if(menusettings_toolbar.isSelected()){
-           toolbar.setManaged(true);
-           toolbar.setVisible(true);
-
-       }else{
            toolbar.setManaged(false);
            toolbar.setVisible(false);
+           timely.setVisible(false);
+           filely.setVisible(false);
+
+       }else{
+           toolbar.setManaged(true);
+           toolbar.setVisible(true);
+           timely.setVisible(true);
+           filely.setVisible(true);
        }
 
-    }
-
-    //Print in printer
-    @FXML
-    private void print(){
-        //TODO Print function
     }
 
     @FXML
@@ -225,5 +218,4 @@ public class Controller{
 
         }
     }
-
 }
